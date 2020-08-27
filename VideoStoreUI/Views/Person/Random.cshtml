@@ -1,7 +1,35 @@
-﻿@model VideoStoreUI.Models.PersonModel
+﻿@model VideoStoreUI.Models.RandomPersonViewModel
 @{
     ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var className = Model.Friends.Count > 0 ? "popular" : null;
+
 }
 
-<h2>@Model.Name</h2>
+<h2 class="@className">@Model.PersonModel.Name</h2>
+@if (Model.Friends.Count == 0)
+{
+    <text>This guy has no friends</text>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        
+        @foreach (var friend in Model.Friends)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Edit", "Person", new {id = friend.Id})">
+                        @friend.Name
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+}
 
